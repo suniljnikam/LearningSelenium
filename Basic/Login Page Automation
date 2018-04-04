@@ -80,6 +80,7 @@ public class LoginPageAutomationWithTestNG {
 	  }
 	  
 	  finally{
+	  	  // Capturing screen shot
 		  File f = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		  FileUtils.copyFile(f,new File("P:\\Documents\\MyActualDocuments\\Selenium\\Evidences\\EvidenceLoginPage.jpg"));
 	  }
