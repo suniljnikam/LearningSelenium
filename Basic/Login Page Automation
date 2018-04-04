@@ -101,10 +101,11 @@ public class LoginPageAutomationWithTestNG {
 
   @AfterMethod
   public void afterMethod() {
-	  driver.close();
+	  driver.quit();
 	  
   }
 
 }
 
 
+-
