@@ -1,0 +1,121 @@
+// Capturing ScreenShot
+
+package AutomationFramework;
+import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+
+public class DaySixProject {
+	WebDriver driver = null;
+  @Test(dataProvider = "LoginCredentials")
+  
+  // as we have written data provider name with @test annotation
+  //below entire method will automatically invoke for all pair of data present in data provider
+  
+  public void getDataFromDataProviderMethod(String userName, String password) throws InterruptedException, IOException {
+	  
+	  // storing web elements 
+	  WebElement userIdText = driver.findElement(By.name("uid"));	  
+	  WebElement passwordText = driver.findElement(By.name("password"));
+	  
+	  //clearing existing entries if any from form elements
+	  userIdText.clear();
+	  passwordText.clear();
+	  
+	  //sending values to form elements
+	  
+	  userIdText.sendKeys(userName); // userName and password are values coming from data provider	
+	  Thread.sleep(2000);
+	  passwordText.sendKeys(password); 
+	  Thread.sleep(2000);
+	  // clicking on login button
+	  driver.findElement(By.name("btnLogin")).click();
+	  
+	  // handling alert or no alert present 
+	  try{
+		  Alert a = driver.switchTo().alert();
+		  String actualError = a.getText();
+		  System.out.println(actualError);
+		  a.accept();
+		  Assert.assertEquals(actualError, Util.ExpectedAlertText); 
+	  }
+	  catch (NoAlertPresentException e){
+		  // On successful login get text display on login page
+		  //dealing with dynamic text display on screen
+		  
+		  //get text display on screen
+		  Thread.sleep(2000);
+		  String pageText = driver.findElement(By.tagName("tbody")).getText();
+		  String parts []=pageText.split(":");
+		  String dynamicText = parts[1];
+		  Assert.assertEquals(dynamicText.substring(1, 5), "mngr");
+		  File f = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		  FileUtils.copyFile(f, new File("P:\\Documents\\MyActualDocuments\\Selenium\\Evidences\\DaySixProject\\EvidenceLoginPage.jpg"));
+		 
+	  }
+	  
+  }
+  @BeforeMethod
+  public void beforeMethod() {
+	  System.setProperty(Util.DRIVER_TYPE, Util.DRIVER_PATH);
+	  driver=new ChromeDriver();
+	  driver.navigate().to(Util.BASE_URL+"V4/");
+  }
+
+  @AfterMethod
+  public void afterMethod() {
+	  driver.close();
+  }
+
+
+  @DataProvider(name="LoginCredentials")
+  public Object[][] DataProviderMethod(){
+	    return new Object[][] {   
+	    	
+	        {Util.USER_NAME,Util.PASSWD},
+	        
+	        {"Invalid","Valid"},
+	        
+	        {"Valid","Invalid"},
+	        
+	        {"Invalid","Invalid"}
+	    
+	      
+	       };
+  }
+	        
+       /*  or you can write
+       *  {
+       *  Object data = new Object [4][2];
+       *  first row
+       *  data[0][0]=Util.USER_NAME
+       *  data[0][1]=Util.PASSWD
+       *  2nd row
+       *  data[1][0]="Invalid"
+       *  data[1][1]="valid"
+       *  3rd row
+       *  data[2][0]="valid"
+       *  data[2][1]="Invalid"
+       *  4th row
+       *  data[3][0]="Invalid"
+       *  data[3][1]="Invalid"
+       */
+      
+    
+  
+}
