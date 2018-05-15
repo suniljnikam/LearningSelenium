@@ -1,0 +1,59 @@
+package Guru99Bank;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import org.testng.annotations.BeforeMethod;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import org.testng.annotations.AfterMethod;
+
+public class TestingBrokenLink {
+	public static WebDriver driver;
+	public static HttpURLConnection con;
+  @Test
+  public void testinBrokenLinks() throws IOException , MalformedURLException{
+	 SoftAssert assertion = new SoftAssert();
+	  driver.get(Utility.BASE_URL);
+	  driver.manage().window().maximize();
+	  driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);	  
+		
+	  // calling login function of utility
+		Utility.login(driver);
+	  
+	  // Getting all links - gettAlllinks function of utility
+	  List<WebElement> links=Utility.getAllLinks(driver);
+	  for (WebElement ele : links)
+	  {
+		  String url = ele.getAttribute("href");
+		  if(url!=null && !(url.contains("javascript"))) {
+			  con = (HttpURLConnection)(new URL(url)).openConnection();
+			  con.connect();
+			  con.setConnectTimeout(3000);
+			  int responseCode = con.getResponseCode();
+			 // Printing message using assertion
+			  System.out.println(" Response Code for Link : "+url+"/t is"+responseCode);
+
+			 //assertion.assertTrue((responseCode<300)&&(responseCode>200),"Link ="+url.toString()+"is not working properly \n");
+			 
+		  }
+		  
+	  }
+  }
+  @BeforeMethod
+  public void beforeMethod() {
+	  driver = Utility.setBrowserProperties(driver);
+  }
+
+  @AfterMethod
+  public void afterMethod() {
+	  Utility.closeBroswerSession(driver);
+  }
+
+}
