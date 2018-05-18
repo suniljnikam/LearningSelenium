@@ -1,0 +1,34 @@
+package pageFactory;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class EcommerceIndexPage {
+	WebDriver driver;
+	
+	// find out of web elements that you need from this web page
+	
+	@FindBy(xpath="//*[@id='nav']/ol/li[1]/a")
+	WebElement mobileLink;
+	
+	// call constructor
+	public EcommerceIndexPage(WebDriver driver)
+	{
+		this.driver= driver;
+		PageFactory.initElements(driver, this);
+	}
+	public void clickOnMobileLink(WebDriver driver)
+	{
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		mobileLink.click();
+	
+	}
+	public String getTitleOfPage(WebDriver driver)
+	{
+		return driver.getTitle();
+	}
+
+}
