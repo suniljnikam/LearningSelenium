@@ -1,0 +1,30 @@
+package pageFactory;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Util {
+	public static final String USER_NAME = "mngr132344";
+	public static final String PASSWD = "uhyrEgY";
+	public static final String BASE_URL="http://live.guru99.com/index.php";
+	public static final String CHROME_DRIVER_TYPE = "webdriver.chrome.driver";
+	public static final String CHROME_DRIVER_PATH = "C:\\UBS\\Dev\\chromedriver.exe";
+	public static final String MOBILE_PAGE_TITLE = "Mobile";
+	public static final String HOME_PAGE_TITLE = "Home page";
+	public static WebDriver setChromeProperties(WebDriver driver)
+	{
+		System.setProperty(CHROME_DRIVER_TYPE,CHROME_DRIVER_PATH);
+		  driver = new ChromeDriver();
+		  return driver;
+		  
+	}
+	
+	public static void closeBroswerSession(WebDriver driver)
+	{
+		driver.quit();
+	}	
+	
+	
+}
+
+
