@@ -1,0 +1,50 @@
+package TestCases;
+
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import Utility.Util;
+import pageFactory.EcommerceIndexPage;
+import pageFactory.MobilePage;
+import pageFactory.SonyXperiaDetailsPage;
+
+public class DayTwoTest extends Util{
+	
+
+	@Test
+	public void dayTwoTest() {
+
+		MobilePage objMobilePage;
+		SonyXperiaDetailsPage objSonyXperiaPage;
+		EcommerceIndexPage objIndexPage = new EcommerceIndexPage(driver);
+		
+		driver.get(Util.BASE_URL);
+		
+		// clicking on mobile link which will return objMobilePage as well
+		
+		objMobilePage = objIndexPage.clickOnMobileLink(driver);
+		
+		// clicking on Sony Xperia  link which will return objSonyXperiaPage as well
+		
+		objSonyXperiaPage = objMobilePage.clickOnSonyXperia();
+		
+		// Verifying prices on mobile page and on Sony Xperia page
+		
+		Assert.assertEquals(objMobilePage.getPriceOfSony(), objSonyXperiaPage.getPriceOfSony(), "Price didn't match - Test Case failed");
+		
+		
+
+	}
+
+	@BeforeMethod
+	public void beforeMethod() {
+		driver = Util.setChromeProperties();
+	}
+
+	@AfterMethod
+	public void afterMethod() {
+		Util.closeBroswerSession();
+	}
+
+}
