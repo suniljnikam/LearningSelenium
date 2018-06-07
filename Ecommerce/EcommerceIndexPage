@@ -1,6 +1,7 @@
 package pageFactory;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,13 +21,15 @@ public class EcommerceIndexPage {
 		this.driver= driver;
 		PageFactory.initElements(driver, this);
 	}
-	public void clickOnMobileLink(WebDriver driver)
+	public MobilePage clickOnMobileLink(WebDriver driver)
 	{
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		mobileLink.sendKeys(Keys.F5);
 		mobileLink.click();
-	
+		return new MobilePage(driver);
+			
 	}
-	public String getTitleOfPage(WebDriver driver)
+	public String getTitleOfPage()
 	{
 		return driver.getTitle();
 	}
