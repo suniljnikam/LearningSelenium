@@ -1,56 +1,52 @@
 // verifying functionality of sort by selection box
 package TestCases;
 
-import org.testng.annotations.Test;
-
-import pageFactory.EcommerceIndexPage;
-import pageFactory.MobilePage;
-import pageFactory.Util;
-
-import org.testng.annotations.BeforeMethod;
-
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-public class DayOneTest {
+import Utility.Util;
+import pageFactory.EcommerceIndexPage;
+import pageFactory.MobilePage;
+
+public class DayOneTest extends Util{
 	
-	WebDriver driver;
-	EcommerceIndexPage objIndexPage;
-	MobilePage objMobilePage;
+	//WebDriver driver;
+	
   @Test
   public void dayOneTesting() throws IOException {
 	  
 	  // creation of objects of page factory classes needed for this test cases
-	  
+	  EcommerceIndexPage objIndexPage;
 	  objIndexPage= new EcommerceIndexPage(driver);
-	  objMobilePage= new MobilePage(driver);
+	  MobilePage objMobilePage;
 	  
 	  driver.get(Util.BASE_URL);
 	  
 	  // verifying title of index page 
-	  System.out.println("Title of home page"+objIndexPage.getTitleOfPage(driver));
+	  System.out.println("Title of home page"+objIndexPage.getTitleOfPage());
 	  
 	  // click on mobile link
-	  objIndexPage.clickOnMobileLink(driver);
+	  objMobilePage = objIndexPage.clickOnMobileLink(driver);
 	  
 	  // verifying title of mobile page
-	  System.out.println("Title of home page"+objIndexPage.getTitleOfPage(driver));
+	  System.out.println("Title of home page"+objIndexPage.getTitleOfPage());
 	  
 	  // logic : we will need two array; one will hold product names before sorting and  ->
 	  //-> another will hold product names after sorting
 	  // sort 1st unsorted array and if it equals second one 
 	  // then it  mean second array is sorted and so products on screen
 	  
-	  String []unsorted = objMobilePage.retrieveProductNames(driver);
+	  String []unsorted = objMobilePage.retrieveProductNames();
 	  
 	  // calling sort by function
-	  objMobilePage.sortByName(driver);
-	  objMobilePage.takeScreenshot(driver);
+	  objMobilePage.sortByName();
+	  objMobilePage.takeScreenshot();
 	  
-	  String []sorted = objMobilePage.retrieveProductNames(driver);
+	  String []sorted = objMobilePage.retrieveProductNames();
 	  Arrays.sort(unsorted);
 	  
 	  // verifying products are sorted or not
@@ -58,13 +54,13 @@ public class DayOneTest {
 	  System.out.println("Products are in sorted manner");
   }
   @BeforeMethod
-  public void beforeMethod() {
-	  driver=Util.setChromeProperties(driver);
+  public void beforeMethod() { 
+	  driver=Util.setChromeProperties();
   }
 
   @AfterMethod
   public void afterMethod() {
-	  Util.closeBroswerSession(driver);
+	  Util.closeBroswerSession();
   }
 
 }
