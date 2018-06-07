@@ -1,0 +1,60 @@
+package pageFactory;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class ShoppingCartPage {
+	
+	WebDriver driver;
+	
+	@FindBy(xpath="//*[@id='shopping-cart-table']/tbody/tr/td[4]/input")
+	WebElement quantityTxtBox;
+	
+	@FindBy(name="update_cart_action")
+	WebElement updateQuantityBtn;
+	
+	@FindBy(xpath="//*[@class='button2 btn-empty']/span/span")
+	WebElement emptyCartLink;
+		
+	@FindBy(xpath="//*[@class='item-msg error']")
+	WebElement requestedQuantityErrorMessage;
+	
+	@FindBy(xpath="//*[@class='page-title']/h1")
+	WebElement emptyCartErrorMessage;
+	
+	public ShoppingCartPage(WebDriver driver)
+	{
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
+	
+	public void setQuanity(int number)
+	{
+		// converting number to character as send keys only accept characters / strings
+		quantityTxtBox.sendKeys(String.valueOf(number));
+		System.out.println("Quanity"+quantityTxtBox.getAttribute("value")+"Set now");
+	}
+	public void updateQuantity()
+	{
+		updateQuantityBtn.click();
+	}
+	
+	public String getErrorMessageForQuantity()
+	{
+		return requestedQuantityErrorMessage.getText();
+	}
+	
+	public void clickOnEmptyCart() throws InterruptedException
+	{
+		emptyCartLink.click();		
+		
+	}
+	
+	public String getErrorMessageForEmptyCart()
+	{
+		return emptyCartErrorMessage.getText();
+	}
+}
+
