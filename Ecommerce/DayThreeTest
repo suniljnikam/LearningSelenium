@@ -1,0 +1,44 @@
+package TestCases;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import Utility.Util;
+import pageFactory.EcommerceIndexPage;
+import pageFactory.MobilePage;
+import pageFactory.ShoppingCartPage;
+
+public class DayThreeTest extends Util{
+	
+
+	@Test
+	    public void dayThreeTest() throws InterruptedException {
+		
+		EcommerceIndexPage objIndexPage = new EcommerceIndexPage(driver);
+		
+		driver.get(Util.BASE_URL);
+				
+		MobilePage objMobilePage = objIndexPage.clickOnMobileLink(driver);
+		
+		ShoppingCartPage objShoppingCart = objMobilePage.goToCart();
+		
+		objShoppingCart.setQuanity(1000);			
+
+		
+		objShoppingCart.clickOnEmptyCart();
+		
+		
+		
+	}
+
+	@BeforeMethod
+	public void beforeMethod() {
+		driver = Util.setChromeProperties();
+	}
+
+	@AfterMethod
+	public void afterMethod() {
+		Util.closeBroswerSession();
+	}
+
+}
