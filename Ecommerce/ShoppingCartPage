@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import Utility.Util;
+
 public class ShoppingCartPage {
 	
 	WebDriver driver;
@@ -12,16 +14,16 @@ public class ShoppingCartPage {
 	@FindBy(xpath="//*[@id='shopping-cart-table']/tbody/tr/td[4]/input")
 	WebElement quantityTxtBox;
 	
-	@FindBy(name="update_cart_action")
+	@FindBy(xpath="//*[@id='shopping-cart-table']/tbody/tr/td[4]/button")
 	WebElement updateQuantityBtn;
 	
 	@FindBy(xpath="//*[@class='button2 btn-empty']/span/span")
 	WebElement emptyCartLink;
 		
-	@FindBy(xpath="//*[@class='item-msg error']")
+	@FindBy(xpath="//p[@class='item-msg error']")
 	WebElement requestedQuantityErrorMessage;
 	
-	@FindBy(xpath="//*[@class='page-title']/h1")
+	@FindBy(xpath="//*[@id='top']/body/div/div/div[2]/div/div/div[1]/h1")
 	WebElement emptyCartErrorMessage;
 	
 	public ShoppingCartPage(WebDriver driver)
@@ -37,7 +39,8 @@ public class ShoppingCartPage {
 		System.out.println("Quanity"+quantityTxtBox.getAttribute("value")+"Set now");
 	}
 	public void updateQuantity()
-	{
+	{		
+		//Util.waitForVisibility(updateQuantityBtn);
 		updateQuantityBtn.click();
 	}
 	
@@ -55,6 +58,23 @@ public class ShoppingCartPage {
 	public String getErrorMessageForEmptyCart()
 	{
 		return emptyCartErrorMessage.getText();
+	}
+	
+	public void verifyErrorMessageForQuantity()
+	{
+		String actualMessage = getErrorMessageForQuantity();
+				
+		Util.assertion.assertTrue(actualMessage.equalsIgnoreCase(Util.updateQuantityErrorMessage),"Expected Message for quantity is different than actual");
+	}
+	
+	public void verifyErrorMessageForEmptyCart()
+	{
+		
+		String actualMessage = getErrorMessageForEmptyCart();
+				
+		Util.assertion.assertTrue(actualMessage.equalsIgnoreCase(Util.emptyCartErrorMessage), "Expected Empty cart message is different than actual");
+		Util.assertion.assertAll();
+		
 	}
 }
 
