@@ -22,12 +22,16 @@ public class DayThreeTest extends Util{
 		
 		ShoppingCartPage objShoppingCart = objMobilePage.goToCart();
 		
-		objShoppingCart.setQuanity(1000);			
-
+		objShoppingCart.setQuanity(1000);
+		
+		objShoppingCart.updateQuantity();
+		
+		objShoppingCart.verifyErrorMessageForQuantity();
 		
 		objShoppingCart.clickOnEmptyCart();
 		
-		
+		objShoppingCart.verifyErrorMessageForEmptyCart();
+				
 		
 	}
 
