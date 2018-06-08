@@ -1,10 +1,15 @@
 package Utility;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.asserts.SoftAssert;
 
 public class Util {
 	public static WebDriver driver;
+	public static SoftAssert assertion = new SoftAssert();
 	public static final String USER_NAME = "mngr132344";
 	public static final String PASSWD = "uhyrEgY";
 	public static final String BASE_URL="http://live.guru99.com/index.php";
@@ -12,7 +17,7 @@ public class Util {
 	public static final String CHROME_DRIVER_PATH = "C:\\UBS\\Dev\\chromedriver.exe";
 	public static final String MOBILE_PAGE_TITLE = "Mobile";
 	public static final String HOME_PAGE_TITLE = "Home Page";
-	public static final String updateQuantityErrorMessage = "* The maximum quantity allowed for purchase is 500.";
+	public static final String updateQuantityErrorMessage = "The requested quantity for \"Sony Experia\" is not available";
 	public static final String emptyCartErrorMessage = "Shopping Cart is Empty";
 	
 	
@@ -29,6 +34,10 @@ public class Util {
 		driver.quit();
 	}	
 	
+	public static void waitForVisibility(WebElement element) throws Error{
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+             wait.until(ExpectedConditions.visibilityOf(element));
+	}
 	
 }
 
