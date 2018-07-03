@@ -1,0 +1,81 @@
+// Using Java CSV package, we can read /write a csv file. In this example, you will learn how to read a csv file.  
+//You create a maven-based java project and add the following dependency in the pom.xml file. 
+
+/*
+ * <dependency>
+        <groupId>net.sourceforge.javacsv</groupId>
+        <artifactId>javacsv</artifactId>
+        <version>2.0</version>
+</dependency>
+ */
+package TestCases;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.csvreader.CsvReader;
+
+import Utility.Util;
+
+public class ReadCSV {
+	
+	@Test
+	public void ReadCSVMethod() {
+		try {
+
+            CsvReader testcases = new CsvReader(Util.CSV_FILE_PATH);
+
+            testcases.readHeaders();
+            //get total numbers of header column
+           int numberOfHeaders=testcases.getHeaderCount();
+            //print header column
+            for(int i=0;i<numberOfHeaders;i++)
+            {
+                System.out.print(testcases.getHeader(i)+",  ");
+            }
+            System.out.println();
+            while (testcases.readRecord())
+            {
+                String TestId = testcases.get("TestId");
+                String TestName = testcases.get("TestName");
+                String TestModule = testcases.get("TestModule");
+                String TestType = testcases.get("TestType");
+                String TestSteps = testcases.get("TestSteps");
+                String Action = testcases.get("Action");
+                String TestResult = testcases.get("TestResult");
+                String Note = testcases.get("Note");
+                 // output file content
+                System.out.println(TestId +",   " + TestName +",    " + TestModule +",  " + TestType +",    " + TestSteps +",   " + Action +",  " + TestResult+",   "+Note);
+            }
+		}
+		
+
+    
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	
+	}
+
+	@BeforeMethod
+	public void beforeMethod() {
+		//Util.setChromeProperties();
+		System.out.println("Begining of REading file");
+	}
+
+	@AfterMethod
+	public void afterMethod() {
+		//Util.closeBroswerSession();
+		System.out.println("Ending of REading file");
+	}
+}
+
+
+
+
