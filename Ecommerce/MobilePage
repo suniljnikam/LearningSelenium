@@ -36,7 +36,16 @@ public class MobilePage {
 	
 	@FindBy(xpath="//*[@id='top']/body/div/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[3]/button")
 	WebElement addToCartSony;
-
+	
+	@FindBy(xpath="//*[@id='top']/body/div/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[3]/ul/li[2]/a")
+	WebElement compareBtnSony;
+	
+	@FindBy(xpath="//*[@id='top']/body/div/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[2]/div/div[3]/ul/li[2]/a")
+	WebElement compareBtnIPhone;
+	
+	@FindBy(xpath="//*[@id='top']/body/div/div/div[2]/div/div[3]/div[1]/div[2]/div/button")
+	WebElement compareBtn;
+	
 	// calling constructor of page
 
 	public MobilePage(WebDriver driver) {
@@ -94,5 +103,21 @@ public class MobilePage {
 		addToCartSony.click();
 		return new ShoppingCartPage(driver);
 	}
+	
+	public void addToCompareSony()
+	{
+		compareBtnSony.click();
+	}
+	
+	public void addToCompareIPhone()
+	{
+		compareBtnIPhone.click();
+	}
+	public CompareProductPage clickOnCompare()
+	{
+		compareBtn.click();
+		return new CompareProductPage(driver);
+	}
+
 
 }
