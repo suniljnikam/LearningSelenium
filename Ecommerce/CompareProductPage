@@ -1,0 +1,42 @@
+package pageFactory;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import Utility.Util;
+
+public class CompareProductPage {
+	WebDriver driver;
+	
+	// Below xpath is for div tag inside which the text "this is Sony Xperia" is written
+
+	@FindBy(xpath="//*[@id='product_comparison']/tbody[2]/tr/td/div")
+	WebElement sonyExperiaText;
+	
+	// Below xpath is for div tag inside which the text "this is Sony Xperia" is written
+	
+	@FindBy(xpath="//*[@id='product_comparison']/tbody[2]/tr/td[2]/div")
+	WebElement iPhoneText;
+	
+	public CompareProductPage(WebDriver driver)
+	{
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
+	public void verifySonyExperiaOnComparePage()
+	{
+		// fetching text of web element  sonyExperiaText and checking with expected text..
+		// if below text is present on screen then it means products are available on screen for comparison...
+		Util.assertion.assertTrue(sonyExperiaText.getText().equalsIgnoreCase("this is Sony Xperia"), "Sony Experia Mobile is not present on compare page");
+	}
+	
+	public void verifyIPhoneOnComparePage()
+	{
+		
+		Util.assertion.assertTrue(iPhoneText.getText().equalsIgnoreCase("IPhone is the one of the best mobile device in market"), "IPhone Mobile is not present on compare page");
+		Util.assertion.assertAll();
+	}
+
+}
